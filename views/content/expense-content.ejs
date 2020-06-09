@@ -1,0 +1,142 @@
+<!--AUTHOR VIEW STARTS HERE -->
+<!--complete logic for expense view-->
+<% if (title == 'Create Expense') { %>
+    <div class="col-sm-8">    
+        <div class="jumbotron">
+            <form action="" method="post">
+              Expense First Name:<br>
+              <input type="text" name="first_name" value="Expense First Name">
+              <br><br>
+              Expense Last Name:<br>
+              <input type="text" name="last_name" value="Expense Last Name">
+              <br><br>
+               Expense Email Address:<br>
+              <input type="email" name="email" value="hello@manifest.com">
+              <br><br>
+              <input type="submit" value="Create Expense">
+            </form>
+        </div>
+    </div>
+<% } else if (title == 'Delete Expense') { %>
+     
+<% } else if (title == 'Update Expense') { %>
+    <div class="col-sm-8">    
+        <div class="jumbotron">
+            <form action="/expense/<%= expense.id %>/update" method="post">
+               Expense First Name:<br>
+              <input type="text" name="first_name" value="<%= expense.first_name %>">
+              <br><br>
+              Expense Last Name:<br>
+              <input type="text" name="last_name" value="<%= expense.last_name %>">
+              <br><br>
+               Expense Email Address:<br>
+              <input type="email" name="email" value="<%= expense.email %>">
+              <br><br>
+              <input type="submit" value="Update Expense">
+            </form>
+        </div>
+    </div>
+<% } else if (title == 'Expense Details') { %>
+    <div class="col-sm-8">    
+        <div class="">
+             <h1>Details of a Single expense - <%= expense.title %> </h1>
+             <p>I am an expense for this ID = <%= expense.id %></p>
+             <p>Expense Title: <%= expense.title %></p>
+             <p>Expense Description:  <%= expense.desc %></p>
+             <p>Expense Amount:  <%= expense.amount %></p>
+             <p>Expense Status: <%= expense.status %></p>
+             <p>Expense Department:  <%= expense.Department %></p>
+             <p>Expense Type:  <%= expense.Type %></p>
+             <p>Expense Category: <%= expense.Category %></p>
+             <p>Expense Employee:  <%= expense.Employee %></p>
+             <p>Expense Created At:  <%= moment(expense.createdAt).format('DD/MM/YYYY'); %></p>
+             <a href="/expense/<%= expense.id %>/update">Edit  Expense</a> | <a href="/expense/<%= expense.id %>/delete">Delete Expense</a>
+        
+        </div>   
+    </div>
+<% } else if (title == 'Expense List') { %>
+    <div class="col-sm-8">    
+        <div class="">
+        <ol>
+        <% expenses.forEach(function(expense) { %>
+                <li>
+                    <h4><a href="/expense/<%= expense.id %>"><%= expense.first_name %></a></h4>
+                    <p>Expense Title: <%= expense.title %> - Expense Description: <%= expense.desc %> - Expense Amount: <%= expense.amount %></p>
+                       <a href="/expense/<%= expense.id %>/">View Expense</a>
+                </li>
+            <br/>
+        <% }); %>
+        </ol>
+    </div>
+    </div>
+<% } else if (title == 'Dashboard') { %>
+    <div class="col-sm-8">    
+        <div class="">
+            <ol>
+                <p>Total Expenses: <%= expenses.length %></p>
+                <p>Approved Expenses: <ol><% 
+                    count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.status == 'Approved'){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+                <p>Disapproved Expenses: <ol><% count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.status == 'Disapproved'){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+                <p>Programming Department: <ol><% count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.Department == 'Programming'){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+                <p>Accounts Department: <ol><% count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.Department == 'Accounts'){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+                <p>Expense Greater Than 1000: <ol><% count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.amount >= 1000){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+                <p>Expense Lesser Than 1000: <ol><% count = 0;
+                    expenses.forEach(function(expense) {
+                        if (expense.amount <= 1000){ count++ %>
+                            <li><a href="/expense/<%= expense.id %>/"><%= expense.title %></a></li>
+                    <% }}); %>
+                    Total: <%= count %>
+                </ol></p>
+            </ol>
+        </div>
+    </div>
+<% } else { %>
+
+<% } %>
+<!--AUTHOR VIEW END HERE-->
+<script>
+    function checkCat() {
+    var checkBoxes = document.getElementsByClassName( 'categoryCheckbox' );
+    var isChecked = false;
+    for (var i = 0; i < checkBoxes.length; i++) {
+        if ( checkBoxes[i].checked ) {
+            isChecked = true;
+        };
+    };
+    if ( isChecked ) {
+        
+        } else {
+            alert( 'Please, check at least one checkbox!' );
+        }   
+}
+</script>
